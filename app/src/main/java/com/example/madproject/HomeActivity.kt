@@ -1,26 +1,34 @@
 package com.example.madproject
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * THIS IS JUST FOR TESTING I PROMISE ILL CHANGE IT LATER
- * Unless nobody sees this commit cause im sneaky like that
- * but i promise stuff will be added here when login/signup is 100% working
- * so slay
+ * The home screen now navigates to three different screens
+ * AddWords, ViewWords and Quiz
+ * If more are needed will be added in the future
  */
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_home)
 
-        // Simple TextView — no XML layout needed for testing
-        val text = TextView(this).apply {
-            text = "Login Successful! Home Screen"
-            textSize = 24f
-            setPadding(64, 64, 64, 64)
+        val addWordButton = findViewById<Button>(R.id.addWord)
+        val viewWordButton = findViewById<Button>(R.id.viewWords)
+        val quizButton = findViewById<Button>(R.id.quiz)
+
+        addWordButton.setOnClickListener {
+            startActivity(Intent(this@HomeActivity, AddWordActivity::class.java))
         }
 
-        setContentView(text)
+        viewWordButton.setOnClickListener {
+            startActivity(Intent(this@HomeActivity, ViewWordActivity::class.java))
+        }
+
+        quizButton.setOnClickListener {
+            startActivity(Intent(this@HomeActivity, QuizActivity::class.java))
+        }
     }
 }
