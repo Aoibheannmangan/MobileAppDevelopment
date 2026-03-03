@@ -25,6 +25,9 @@
 
         <activity android:name=".SignupActivity" />
         <activity android:name="HomeActivity" />
+        <activity android:name="AddWordActivity" />
+        <activity android:name="ViewWordActivity" />
+        <activity android:name="QuizActivity" />
     </application>
 
 </manifest>

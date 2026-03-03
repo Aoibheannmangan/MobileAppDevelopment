@@ -2,17 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/signup"
+    android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupActivity">
+    tools:context=".HomeActivity">
 
-    <EditText
-        android:id="@+id/signupEmail"
+    <Button
+        android:id="@+id/addWord"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:text="Add Words"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,28 +20,26 @@
         android:layout_marginEnd="32dp"
         />
 
-    <EditText
-        android:id="@+id/signupPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/signupEmail"
-        app:layout_constraintStart_toStartOf="@id/signupEmail"
-        app:layout_constraintEnd_toEndOf="@id/signupEmail"
-        android:layout_marginTop="16dp"
-        />
-
     <Button
-        android:id="@+id/signupButton"
+        android:id="@+id/viewWords"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Signup"
-        app:layout_constraintTop_toBottomOf="@id/signupPassword"
-        app:layout_constraintStart_toStartOf="@id/signupPassword"
-        app:layout_constraintEnd_toEndOf="@id/signupPassword"
+        android:text="View Words"
+        app:layout_constraintTop_toBottomOf="@id/addWord"
+        app:layout_constraintStart_toStartOf="@id/addWord"
+        app:layout_constraintEnd_toEndOf="@id/addWord"
         android:layout_marginTop="24dp"
         />
 
+    <Button
+        android:id="@+id/quiz"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        app:layout_constraintTop_toBottomOf="@id/viewWords"
+        app:layout_constraintStart_toStartOf="@id/viewWords"
+        app:layout_constraintEnd_toEndOf="@id/viewWords"
+        android:layout_marginTop="24dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
