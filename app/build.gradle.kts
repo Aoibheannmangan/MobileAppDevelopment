@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,8 +7,13 @@ plugins {
 }
 
 //Read the keys from local.properties
-val supabaseUrl =  if (project.hasProperty("SUPABASE_URL")) project.property("SUPABASE_URL") as String else ""
-val supabaseKey =  if (project.hasProperty("SUPABASE_ANON_KEY")) project.property("SUPABASE_ANON_KEY") as String else ""
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { localProperties.load(it)}
+}
+val supabaseUrl =  localProperties["SUPABASE_URL"] as String? ?: ""
+val supabaseKey =  localProperties["SUPABASE_ANON_KEY"] as String? ?:""
 
 android {
     namespace = "com.example.madproject"
