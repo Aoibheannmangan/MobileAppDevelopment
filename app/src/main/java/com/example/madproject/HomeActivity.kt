@@ -18,7 +18,7 @@ class HomeActivity : AppCompatActivity() {
         val addWordButton = findViewById<Button>(R.id.addWord)
         val viewWordButton = findViewById<Button>(R.id.viewWords)
         val quizButton = findViewById<Button>(R.id.quiz)
-
+        val deviceButton = findViewById<Button>(R.id.deviceStats)
         addWordButton.setOnClickListener {
             startActivity(Intent(this@HomeActivity, AddWordActivity::class.java))
         }
@@ -29,6 +29,10 @@ class HomeActivity : AppCompatActivity() {
 
         quizButton.setOnClickListener {
             startActivity(Intent(this@HomeActivity, QuizActivity::class.java))
+        }
+
+        deviceButton.setOnClickListener {
+            startActivity(Intent(this@HomeActivity, DeviceStatsActivity::class.java))
         }
     }
 }

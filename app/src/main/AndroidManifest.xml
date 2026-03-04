@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -28,6 +30,7 @@
         <activity android:name="AddWordActivity" />
         <activity android:name="ViewWordActivity" />
         <activity android:name="QuizActivity" />
+        <activity android:name="DeviceStatsActivity" />
     </application>
 
 </manifest>
