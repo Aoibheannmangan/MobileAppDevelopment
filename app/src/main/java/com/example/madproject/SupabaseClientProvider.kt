@@ -3,6 +3,7 @@ package com.example.madproject
 import com.example.madproject.BuildConfig
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.auth.Auth
+import io.github.jan.supabase.postgrest.Postgrest
 
 /**
  * This is a Singleton object which provides a single shared instance of the Supabase.
@@ -21,5 +22,6 @@ object SupabaseClientProvider {
         supabaseKey = BuildConfig.SUPABASE_ANON_KEY
     ) {
         install(Auth)
+        install(Postgrest)
     }
 }
