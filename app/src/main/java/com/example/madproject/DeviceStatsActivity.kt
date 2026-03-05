@@ -69,10 +69,14 @@ class DeviceStatsActivity : AppCompatActivity() {
                     saveToSupabase(stats)
                     updateUI(stats)
                     statusText.text = "Last saved: just now"
+                    android.util.Log.d("DeviceStats", "Saved successfully!")
                 } catch (e: Exception){
                     android.util.Log.e("DeviceStatsError", "Failed", e)
                     statusText.text = "Save failed: ${e.message}"
+                    android.util.Log.e("DeviceStatsError", "Failed: ${e.message}", e)
                 }
+                android.util.Log.d("DeviceStats", "Waiting 30s...")
+                delay(30_000)06@
 
                 //Wait 30 secs before collecting again
                 delay(30_000)
