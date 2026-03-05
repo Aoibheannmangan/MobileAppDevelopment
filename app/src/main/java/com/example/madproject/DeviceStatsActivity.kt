@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities  // ← was missing
+import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
 import android.os.BatteryManager
 import android.os.Build
@@ -29,7 +29,13 @@ data class DeviceStats (
     @SerialName("device_model") val deviceModel: String,
     @SerialName("os_version") val osVersion: String,
     @SerialName("network_type") val networkType: String,
-    @SerialName("wifi_name") val wifiName: String
+    @SerialName("wifi_name") val wifiName: String,
+    @SerialName("ram_total_mb") val ramTotalMb: Long,
+    @SerialName("ram_available_mb") val ramAvaliableMb: Long,
+    @SerialName("ram_used_mb") val ramUsedMb: Long,
+    @SerialName("storage_total_gb") val storageTotalGb: Float,
+    @SerialName("storage_free_gb") val storageFreeGb: Float,
+    @SerialName("storage_used_gb") val storageUsedGb: Float
 )
 
 class DeviceStatsActivity : AppCompatActivity() {
@@ -37,12 +43,14 @@ class DeviceStatsActivity : AppCompatActivity() {
     private lateinit var deviceText: TextView
     private lateinit var networkText: TextView
     private lateinit var statusText: TextView
+    private lateinit var ramText: TextView
+    private lateinit var storageText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_device)
 
-        //REquest location permission for WiFi SSID
+        //Request location permission for WiFi SSID
         ActivityCompat.requestPermissions(
             this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001
         )
@@ -50,11 +58,12 @@ class DeviceStatsActivity : AppCompatActivity() {
         batteryText = findViewById(R.id.batteryText)
         deviceText = findViewById(R.id.deviceText)
         networkText = findViewById(R.id.networkText)
+        ramText = findViewById(R.id.ramText)
+        storageText = findViewById(R.id.storageText)
         statusText = findViewById(R.id.statusText)
 
         //Show static device info immediately since it never changes
         deviceText.text = "Device: ${Build.MODEL} (Android ${Build.VERSION.RELEASE})"
-
     }
 
     /**
@@ -71,14 +80,12 @@ class DeviceStatsActivity : AppCompatActivity() {
                     statusText.text = "Last saved: just now"
                     android.util.Log.d("DeviceStats", "Saved successfully!")
                 } catch (e: Exception){
-                    android.util.Log.e("DeviceStatsError", "Failed", e)
-                    statusText.text = "Save failed: ${e.message}"
                     android.util.Log.e("DeviceStatsError", "Failed: ${e.message}", e)
+                    statusText.text = "Save failed: ${e.message}"
                 }
-                android.util.Log.d("DeviceStats", "Waiting 30s...")
-                delay(30_000)06@
 
                 //Wait 30 secs before collecting again
+                android.util.Log.d("DeviceStats", "Waiting 30s...")
                 delay(30_000)
             }
         }
@@ -86,7 +93,7 @@ class DeviceStatsActivity : AppCompatActivity() {
 
     /**
      * Reads current info from system
-     * Returns deviceStats object ready to be saved to Supabase
+     * Returns DeviceStats object ready to be saved to Supabase
      * We pumping adrenaline
      */
     private fun collectStats(): DeviceStats {
@@ -94,7 +101,7 @@ class DeviceStatsActivity : AppCompatActivity() {
         val batteryIntent = registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         val level = batteryIntent?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
         val scale = batteryIntent?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
-        val batteryPct = if (scale > 0) (level * 100 /scale) else -1
+        val batteryPct = if (scale > 0) (level * 100 / scale) else -1
         val status = batteryIntent?.getIntExtra(BatteryManager.EXTRA_STATUS, -1) ?: -1
         val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
 
@@ -109,15 +116,15 @@ class DeviceStatsActivity : AppCompatActivity() {
             else -> "Other"
         }
 
-        //Wifi
+        //WiFi - requires location permission on Android 8+ to read SSID
         val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val wifiName = if (networkType == "WiFi") {
-           val hasPermission = ContextCompat.checkSelfPermission(
-               this, Manifest.permission.ACCESS_FINE_LOCATION
-           ) == PackageManager.PERMISSION_GRANTED
+            val hasPermission = ContextCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
 
             if (hasPermission) {
-                wifiManager.connectionInfo.ssid.replace("\"", "")
+                wifiManager.connectionInfo.ssid.replace("\"", "") // remove surrounding quotes
             } else {
                 "Permission Needed"
             }
@@ -125,13 +132,33 @@ class DeviceStatsActivity : AppCompatActivity() {
             "N/A"
         }
 
+        //RAM - uses ActivityManager to get total and available memory in MB
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager
+        val memInfo = android.app.ActivityManager.MemoryInfo()
+        activityManager.getMemoryInfo(memInfo)
+        val ramTotalMb = memInfo.totalMem / (1024 * 1024)
+        val ramAvaliableMb = memInfo.availMem / (1024 * 1024)
+        val ramUsedMb = ramTotalMb - ramAvaliableMb
+
+        //Storage - reads internal storage partition size in GB
+        val statFs = android.os.StatFs(android.os.Environment.getDataDirectory().path)
+        val storageTotalGb = statFs.totalBytes / (1024f * 1024f * 1024f)
+        val storageFreeGb = statFs.freeBytes / (1024f * 1024f * 1024f)
+        val storageUsedGb = storageTotalGb - storageFreeGb
+
         return DeviceStats(
             batteryLevel = batteryPct,
             isCharging = isCharging,
             deviceModel = "${Build.MANUFACTURER} ${Build.MODEL}",
             osVersion = "Android ${Build.VERSION.RELEASE}",
             networkType = networkType,
-            wifiName = wifiName
+            wifiName = wifiName,
+            ramTotalMb = ramTotalMb,
+            ramAvaliableMb = ramAvaliableMb,
+            ramUsedMb = ramUsedMb,
+            storageTotalGb = storageTotalGb,
+            storageFreeGb = storageFreeGb,
+            storageUsedGb = storageUsedGb
         )
     }
 
@@ -140,10 +167,12 @@ class DeviceStatsActivity : AppCompatActivity() {
         SupabaseClientProvider.client.from("device_stats").insert(stats)
     }
 
-    //Update TextViews
+    //Update TextViews with the latest stats
     private fun updateUI(stats: DeviceStats) {
         batteryText.text = "Battery: ${stats.batteryLevel}% ${if (stats.isCharging) "(Charging)" else ""}"
         networkText.text = "Network: ${stats.networkType} ${if (stats.wifiName != "N/A") "(${stats.wifiName})" else ""}"
+        ramText.text = "RAM: ${stats.ramUsedMb}MB used / ${stats.ramTotalMb}MB total"
+        storageText.text = "Storage: ${"%.1f".format(stats.storageUsedGb)}GB used / ${"%.1f".format(stats.storageTotalGb)}GB total"
     }
 
     override fun onRequestPermissionsResult(
