@@ -3,6 +3,7 @@ package com.example.madproject
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities  // ← was missing
 import android.net.wifi.WifiManager
@@ -11,12 +12,15 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import android.Manifest
+import androidx.core.app.ActivityCompat
 
 @Serializable
 data class DeviceStats (
@@ -38,6 +42,11 @@ class DeviceStatsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_device)
 
+        //REquest location permission for WiFi SSID
+        ActivityCompat.requestPermissions(
+            this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1001
+        )
+
         batteryText = findViewById(R.id.batteryText)
         deviceText = findViewById(R.id.deviceText)
         networkText = findViewById(R.id.networkText)
@@ -46,8 +55,6 @@ class DeviceStatsActivity : AppCompatActivity() {
         //Show static device info immediately since it never changes
         deviceText.text = "Device: ${Build.MODEL} (Android ${Build.VERSION.RELEASE})"
 
-        //Start the loop that collects every 30 seconds
-        startCollecting()
     }
 
     /**
@@ -101,7 +108,15 @@ class DeviceStatsActivity : AppCompatActivity() {
         //Wifi
         val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val wifiName = if (networkType == "WiFi") {
-            wifiManager.connectionInfo.ssid.replace("\"", "") // remove surrounding quotes
+           val hasPermission = ContextCompat.checkSelfPermission(
+               this, Manifest.permission.ACCESS_FINE_LOCATION
+           ) == PackageManager.PERMISSION_GRANTED
+
+            if (hasPermission) {
+                wifiManager.connectionInfo.ssid.replace("\"", "")
+            } else {
+                "Permission Needed"
+            }
         } else {
             "N/A"
         }
@@ -125,5 +140,16 @@ class DeviceStatsActivity : AppCompatActivity() {
     private fun updateUI(stats: DeviceStats) {
         batteryText.text = "Battery: ${stats.batteryLevel}% ${if (stats.isCharging) "(Charging)" else ""}"
         networkText.text = "Network: ${stats.networkType} ${if (stats.wifiName != "N/A") "(${stats.wifiName})" else ""}"
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1001) {
+            startCollecting()
+        }
     }
 }
