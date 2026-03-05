@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
 
@@ -26,11 +27,23 @@ class ViewWordActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
+                val currentUser = SupabaseClientProvider.client.auth.currentUserOrNull()
+                val userId = currentUser?.id
+
+                if (userId == null) {
+                    Toast.makeText(this@ViewWordActivity, "Not logged in", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+
                 //Get all the words from the supabase but ONLY for the one user logged in cause we dont want anyone elses words
                //RLS policy on words means only user's words are returned
                 val words = SupabaseClientProvider.client
                     .from("words")
-                    .select()
+                    .select{
+                        filter {
+                            eq("user_id", userId)
+                        }
+                    }
                     .decodeList<Word>()
 
                 //Set the adapter with the fetched words
