@@ -1,5 +1,6 @@
 package com.example.madproject
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.*
@@ -31,7 +32,7 @@ class AddWordActivity : AppCompatActivity() {
         val bookInput = findViewById<EditText>(R.id.bookInput)
         val saveButton = findViewById<Button>(R.id.saveWord)
         val wordMeaningText = findViewById<TextView>(R.id.wordMeaning)
-
+        val homeButton = findViewById<Button>(R.id.homeButton)
         // Triggered when the user taps the save button
         saveButton.setOnClickListener {
             val word = wordInput.text.toString().trim()
@@ -44,6 +45,10 @@ class AddWordActivity : AppCompatActivity() {
                     "Please fill in all fields",
                     Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
+            }
+
+            homeButton.setOnClickListener {
+                startActivity(Intent(this@AddWordActivity, HomeActivity::class.java))
             }
 
             // Launch coroutine on lifecycle scope so it cancels if the Activity is destroyed

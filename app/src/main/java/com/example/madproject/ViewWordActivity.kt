@@ -1,5 +1,6 @@
 package com.example.madproject
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
+import android.widget.Button
 
 /**
  * ViewWordActivity shows all the words logged in SupaBase
@@ -22,9 +24,13 @@ class ViewWordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_view_words)
 
         val recyclerView = findViewById<RecyclerView>(R.id.wordsRecyclerView)
+        val homeButton = findViewById<Button>(R.id.homeButton)
         //Put the words in a vertical list thats scrollable cause there might be a lot of words
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+        homeButton.setOnClickListener {
+            startActivity(Intent(this@ViewWordActivity, HomeActivity::class.java))
+        }
         lifecycleScope.launch {
             try {
                 val currentUser = SupabaseClientProvider.client.auth.currentUserOrNull()

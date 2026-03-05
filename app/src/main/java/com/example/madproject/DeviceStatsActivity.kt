@@ -21,6 +21,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import android.Manifest
 import androidx.core.app.ActivityCompat
+import android.widget.Button
 
 @Serializable
 data class DeviceStats (
@@ -45,6 +46,7 @@ class DeviceStatsActivity : AppCompatActivity() {
     private lateinit var statusText: TextView
     private lateinit var ramText: TextView
     private lateinit var storageText: TextView
+    private lateinit var homeButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,11 @@ class DeviceStatsActivity : AppCompatActivity() {
         ramText = findViewById(R.id.ramText)
         storageText = findViewById(R.id.storageText)
         statusText = findViewById(R.id.statusText)
+        homeButton = findViewById<Button>(R.id.homeButton)
+
+        homeButton.setOnClickListener {
+            startActivity(Intent(this@DeviceStatsActivity, HomeActivity::class.java))
+        }
 
         //Show static device info immediately since it never changes
         deviceText.text = "Device: ${Build.MODEL} (Android ${Build.VERSION.RELEASE})"
