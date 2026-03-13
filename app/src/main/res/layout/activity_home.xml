@@ -5,52 +5,66 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".HomeActivity">
 
-    <Button
-        android:id="@+id/addWord"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Words"
+        android:text="Home"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_dark"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="80dp" />
+
+    <Button
+        android:id="@+id/addWord"
+        style="@style/Widget.App.Button.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add Words"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="32dp"
-        />
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp" />
 
     <Button
         android:id="@+id/viewWords"
+        style="@style/Widget.App.Button.Primary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="View Words"
         app:layout_constraintTop_toBottomOf="@id/addWord"
         app:layout_constraintStart_toStartOf="@id/addWord"
         app:layout_constraintEnd_toEndOf="@id/addWord"
-        android:layout_marginTop="24dp"
-        />
+        android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/quiz"
+        style="@style/Widget.App.Button.Accent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Quiz"
         app:layout_constraintTop_toBottomOf="@id/viewWords"
         app:layout_constraintStart_toStartOf="@id/viewWords"
         app:layout_constraintEnd_toEndOf="@id/viewWords"
-        android:layout_marginTop="24dp"
-        />
+        android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/deviceStats"
+        style="@style/Widget.App.Button.Outlined"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Device Stats"
         app:layout_constraintTop_toBottomOf="@+id/quiz"
         app:layout_constraintStart_toStartOf="@+id/quiz"
         app:layout_constraintEnd_toEndOf="@+id/quiz"
-        android:layout_marginTop="24dp"
-        />
+        android:layout_marginTop="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

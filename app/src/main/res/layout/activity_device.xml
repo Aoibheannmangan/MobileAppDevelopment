@@ -4,23 +4,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:padding="32dp">
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Device Stats"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="28dp" />
 
     <TextView
         android:id="@+id/deviceText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/on_surface"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="32dp" />
 
     <TextView
         android:id="@+id/batteryText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:textColor="@color/on_surface"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/deviceText"
         app:layout_constraintStart_toStartOf="@id/deviceText"
@@ -31,6 +47,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:textColor="@color/on_surface"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/batteryText"
         app:layout_constraintStart_toStartOf="@id/batteryText"
@@ -41,6 +58,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:textColor="@color/on_surface"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/networkText"
         app:layout_constraintStart_toStartOf="@id/networkText"
@@ -51,6 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="16sp"
+        android:textColor="@color/on_surface"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/ramText"
         app:layout_constraintStart_toStartOf="@id/ramText"
@@ -61,22 +80,21 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/on_surface_variant"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/networkText"
-        app:layout_constraintStart_toStartOf="@id/networkText"
-        app:layout_constraintEnd_toEndOf="@id/networkText" />
+        app:layout_constraintTop_toBottomOf="@id/storageText"
+        app:layout_constraintStart_toStartOf="@id/storageText"
+        app:layout_constraintEnd_toEndOf="@id/storageText" />
 
     <Button
         android:id="@+id/homeButton"
+        style="@style/Widget.App.Button.Outlined"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Home"
         app:layout_constraintTop_toBottomOf="@id/statusText"
         app:layout_constraintStart_toStartOf="@id/statusText"
         app:layout_constraintEnd_toEndOf="@id/statusText"
-        android:layout_marginTop="24dp"
-        />
-
+        android:layout_marginTop="24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
