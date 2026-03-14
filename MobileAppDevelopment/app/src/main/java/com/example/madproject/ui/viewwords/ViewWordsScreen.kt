@@ -53,7 +53,7 @@ fun ViewWordsScreen(
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text(word.wordText, style = MaterialTheme.typography.titleMedium)
                         Text(word.wordMeaning, style = MaterialTheme.typography.bodySmall)
-                        Text("From: ${word.bookName}", style = MaterialTheme.typography.bodySmall)
+                        Text("From: ${word.bookFoundIn}", style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }
