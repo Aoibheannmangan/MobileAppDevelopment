@@ -36,7 +36,7 @@ fun DeviceStatsScreen(
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
-    ) { /* granted or denied — start collecting either way, repo handles missing permission */ ->
+    ) { _ -> // granted or denied — start collecting either way, repo handles missing permission
         viewModel.startCollecting()
     }
 
