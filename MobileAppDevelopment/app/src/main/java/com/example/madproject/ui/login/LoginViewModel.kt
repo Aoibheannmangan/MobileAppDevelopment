@@ -27,7 +27,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     private val authRepository = AuthRepository()
 
-    // _state  mutable internally, state is read-only externally
+    // _state  mutable internally, state is read-only externally <- suggested by anthropic ai
     private val _state = MutableStateFlow<LoginState>(LoginState.Idle)
     val state: StateFlow<LoginState> = _state.asStateFlow()
 

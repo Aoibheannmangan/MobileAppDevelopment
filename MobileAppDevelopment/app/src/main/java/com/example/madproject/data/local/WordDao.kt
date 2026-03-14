@@ -6,6 +6,10 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 /**
+ * anthropic ai helped build out the word DAO and with writing the SQL especially
+/ */
+
+/**
  * Data Access Object — Is basically like the ORM
  * Room generates the actual SQL and implementation later.
  *

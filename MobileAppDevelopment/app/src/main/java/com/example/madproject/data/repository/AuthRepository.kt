@@ -28,5 +28,11 @@ class AuthRepository {
     }
 
     /** returns current uses id, null if not logged in */
+    /** used anthropic ai to figure out wiring the Supabase auth session to the Room database queries so each user only sees their own words:
+    Specifically, after login you had to:
+    1. Retrieve the user ID from the Supabase Auth session
+    2. Pass it down through the ViewModel into the repository
+    3. Filter the Room DAO query by that user ID
+    4. Handle the case where the session is null or expired*/
     fun getCurrentUserId(): String? = client.auth.currentUserOrNull()?.id
 }

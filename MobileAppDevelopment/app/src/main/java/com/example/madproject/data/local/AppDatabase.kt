@@ -18,7 +18,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun wordDao(): WordDao
 
     companion object {
-        @Volatile
+        @Volatile //Ai-assisted with preventing race conditions across threads
         private var INSTANCE: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {
