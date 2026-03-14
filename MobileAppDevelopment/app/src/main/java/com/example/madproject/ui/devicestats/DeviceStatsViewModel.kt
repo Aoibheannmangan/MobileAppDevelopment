@@ -1,5 +1,6 @@
 package com.example.madproject.ui.devicestats
 
+//Used GenerativeAi for lines 42 to 58 to integrate the worker class with what was currently there
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
