@@ -21,12 +21,31 @@ class SignupActivity : AppCompatActivity(){
         //Binds UI elements from activity_signup.xml
         val emailInput = findViewById<EditText>(R.id.signupEmail)
         val passwordInput = findViewById<EditText>(R.id.signupPassword)
+        val confirmPasswordInput = findViewById<EditText>(R.id.signupPasswordConfirm)
         val signupButton = findViewById<Button>(R.id.signupButton)
 
         //This happens when the user clicks the signup button
         signupButton.setOnClickListener {
-            val userEmail = emailInput.text.toString()
+            val userEmail = emailInput.text.toString().trim()
             val userPassword = passwordInput.text.toString()
+            val confirmPassword = confirmPasswordInput.text.toString()
+
+            if (userEmail.isEmpty() || userPassword.isEmpty() || confirmPassword.isEmpty()) {
+                Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (userPassword != confirmPassword) {
+                Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (userPassword.length < 6) {
+                Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            signupButton.isEnabled = false;
 
             /**
              * Launches a coroutine tied to the Activities Lifecycle
@@ -51,11 +70,11 @@ class SignupActivity : AppCompatActivity(){
                 } catch (e: Exception) {
                     //Log the full error to Logcat for debugging
                     android.util.Log.e("SignupError", "Signup failed", e)
-
+                    signupButton.isEnabled = true
                     //Error message for whens signup fails (cause it keeps doing that)
                     Toast.makeText(
                         this@SignupActivity,
-                        "Signup Failed: ${e.message}",
+                        "Signup Failed. Please try again",
                         Toast.LENGTH_LONG
                     ).show()
                 }

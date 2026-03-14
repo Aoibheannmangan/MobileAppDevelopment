@@ -32,8 +32,16 @@ class MainActivity : AppCompatActivity() {
 
         //This all happens when the user click the "Login" button
         loginButton.setOnClickListener {
-            val userEmail = emailInput.text.toString()
+            val userEmail = emailInput.text.toString().trim()
             val userPassword = passwordInput.text.toString()
+
+            if (userEmail.isEmpty() || userPassword.isEmpty()) {
+                Toast.makeText(this, "Please enter your email and password.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            loginButton.isEnabled = false
+
             /**
              * Launches a coroutine tied to the Activities Lifecycle
              * Ensures its cancelled if Activity is destroyed and prevents memory leaks or crashes on background threads
@@ -60,10 +68,11 @@ class MainActivity : AppCompatActivity() {
                     finish()
 
                 } catch (e:Exception){
+                    loginButton.isEnabled = true
                     //Catches any authentication errors and kindly lets user know
                     Toast.makeText(
                         this@MainActivity,
-                        "Login Failed: ${e.message}",
+                        "Login Failed. Check your email and password",
                         Toast.LENGTH_LONG
                     ).show()
                 }

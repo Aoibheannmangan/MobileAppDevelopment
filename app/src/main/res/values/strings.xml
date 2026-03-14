@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">madproject</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>
