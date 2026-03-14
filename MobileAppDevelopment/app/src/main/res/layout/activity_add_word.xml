@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addWords"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".AddWordActivity">
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add a Word"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="80dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wordLayout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter a word"
+        app:boxStrokeColor="@color/primary"
+        app:hintTextColor="@color/primary"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/wordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/bookLayout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="What book did you find this word in?"
+        app:boxStrokeColor="@color/primary"
+        app:hintTextColor="@color/primary"
+        app:layout_constraintTop_toBottomOf="@id/wordLayout"
+        app:layout_constraintStart_toStartOf="@id/wordLayout"
+        app:layout_constraintEnd_toEndOf="@id/wordLayout"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bookInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/saveWord"
+        style="@style/Widget.App.Button.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Save word and view meaning"
+        app:layout_constraintTop_toBottomOf="@id/bookLayout"
+        app:layout_constraintStart_toStartOf="@id/bookLayout"
+        app:layout_constraintEnd_toEndOf="@id/bookLayout"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:id="@+id/wordMeaning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:textColor="@color/on_surface"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/saveWord"
+        app:layout_constraintStart_toStartOf="@id/saveWord"
+        app:layout_constraintEnd_toEndOf="@id/saveWord" />
+
+    <Button
+        android:id="@+id/homeButton"
+        style="@style/Widget.App.Button.Outlined"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        app:layout_constraintTop_toBottomOf="@id/wordMeaning"
+        app:layout_constraintStart_toStartOf="@id/wordMeaning"
+        app:layout_constraintEnd_toEndOf="@id/wordMeaning"
+        android:layout_marginTop="24dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

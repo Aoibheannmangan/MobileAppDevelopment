@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/quizMeaningPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading..."
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp" />
+
+    <EditText
+        android:id="@+id/quizAnswerInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type the word here"
+        android:inputType="text"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/quizCheckButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check Answer"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/quizResultText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/quizNextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next Word"
+        android:visibility="gone"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/homeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

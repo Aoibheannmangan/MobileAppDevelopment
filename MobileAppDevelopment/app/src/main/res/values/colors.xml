@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Primary palette - Red -->
+    <color name="primary">#D32F2F</color>
+    <color name="primary_dark">#B71C1C</color>
+    <color name="primary_light">#EF9A9A</color>
+    <color name="on_primary">#FFFFFF</color>
+
+    <!-- Secondary palette - Darker Red -->
+    <color name="secondary">#C62828</color>
+    <color name="secondary_dark">#8E0000</color>
+    <color name="on_secondary">#FFFFFF</color>
+
+    <!-- Surface / Background -->
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="on_surface_variant">#5F5F5F</color>
+
+    <!-- Outlined button stroke -->
+    <color name="outline">#D32F2F</color>
+</resources>
