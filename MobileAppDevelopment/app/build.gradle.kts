@@ -3,7 +3,8 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("plugin.serialization") version "2.0.0"
+    alias(libs.plugins.kotlin.compose)   // Kotlin 2.0+ bundled Compose compiler
+    kotlin("plugin.serialization") version "2.0.21"
     kotlin("kapt")
 }
 
@@ -22,6 +23,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        compose = true   // enables Compose UI toolkit
     }
 
     defaultConfig {
@@ -57,13 +59,11 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(platform("io.github.jan-tennert.supabase:bom:3.0.0"))
     implementation("io.github.jan-tennert.supabase:auth-kt")
     implementation("io.github.jan-tennert.supabase:postgrest-kt")
     implementation("io.ktor:ktor-client-android:3.0.0")
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     // viewmodel survives rotation, lifecyclescope does not
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
@@ -73,6 +73,24 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")       // adds coroutine + flow support
     kapt("androidx.room:room-compiler:2.6.1")            // generates the db implementation code
+
+    // --- Jetpack Compose ---
+    // BOM pins all compose library versions so they're always compatible with each other
+    val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
+    implementation(composeBom)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    // activity-compose provides setContent {} and other Activity<->Compose bridges
+    implementation("androidx.activity:activity-compose:1.9.3")
+    // navigation-compose provides NavHost and NavController
+    implementation("androidx.navigation:navigation-compose:2.8.5")
+    // viewModel() composable — creates/retrieves VM scoped to nav backstack entry
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    // WorkManager — background stats sync (was used but missing from deps)
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
+
+    debugImplementation("androidx.compose.ui:ui-tooling") // layout inspector support
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

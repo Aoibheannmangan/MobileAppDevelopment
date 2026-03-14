@@ -1,4 +1,11 @@
-class DeviceStatsWorker (
+package com.example.madproject.ui.devicestats
+
+import android.content.Context
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
+import com.example.madproject.data.repository.DeviceStatsRepository
+
+class DeviceStatsWorker(
     context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {

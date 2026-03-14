@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Madproject">
 
-        <!-- Fully qualified class names needed because activities moved to subpackages -->
+        <!-- Single activity — all screens are Compose composables inside NavHost -->
         <activity
             android:name="com.example.madproject.ui.login.MainActivity"
             android:exported="true">
@@ -27,13 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.example.madproject.ui.signup.SignupActivity" />
-        <activity android:name="com.example.madproject.ui.home.HomeActivity" />
-        <activity android:name="com.example.madproject.ui.addword.AddWordActivity" />
-        <activity android:name="com.example.madproject.ui.viewwords.ViewWordActivity" />
-        <activity android:name="com.example.madproject.ui.quiz.QuizActivity" />
-        <activity android:name="com.example.madproject.ui.devicestats.DeviceStatsActivity" />
 
     </application>
 
